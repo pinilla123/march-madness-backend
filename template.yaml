@@ -1,0 +1,39 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: March Madness
+
+Globals:
+  Api:
+    # Allows API calls everywhere
+    Cors:
+      AllowMethods: "'OPTIONS,POST,GET,DELETE'"
+      AllowHeaders: "'Content-Type,Authorization'"
+      AllowOrigin: "'*'"
+    GatewayResponses:
+      DEFAULT_5xx:
+        ResponseParameters:
+          Headers:
+            Access-Control-Allow-Origin: "'*'"
+      DEFAULT_4xx:
+        ResponseParameters:
+          Headers:
+            Access-Control-Allow-Origin: "'*'"
+
+Resources:
+  getSampleFunction:
+    Type: 'AWS::Serverless::Function'
+    Properties:    
+      Handler: function.handler
+      Runtime: python3.7
+      CodeUri: ./lambdas/example/get
+      Description: 'Lambda function example
+      MemorySize: 128
+      Timeout: 30
+      Events:
+        function:
+          Type: Api
+          Properties:
+            Auth:
+            Path: /example/get
+            Method: get
+
