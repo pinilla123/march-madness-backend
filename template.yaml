@@ -33,7 +33,6 @@ Resources:
         function:
           Type: Api
           Properties:
-            Auth:
             Path: /example/get
             Method: get
 
